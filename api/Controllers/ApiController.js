@@ -1,7 +1,6 @@
 const unirest = require('unirest')
 const jwt = require('../middleware/jwt')
 
-
 class ApiController {
   async signup (ctx, next) {
     const {email, name} = ctx.request.body
@@ -15,8 +14,6 @@ class ApiController {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }).send(params).end((response) => {
-        console.log(process.env.USER_URI)
-        console.log(response)
         if (response) {
           resolve(response.body)
         } else if (response.error) {
@@ -177,6 +174,5 @@ class ApiController {
     })
   }
 }
-
 
 module.exports = new ApiController()
