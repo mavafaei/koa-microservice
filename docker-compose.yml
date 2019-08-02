@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  
+  users:
+    container_name: pixel-users
+    build: ./users
+    ports:
+      - "3000:3000"
+    environment:
+     - NODE_ENV=local
+     - ES_HOST=elasticsearch
+     - PORT= 3000
+  conversation:
+      container_name: pixel-conversation
+      build: ./conversation
+      ports:
+        - "3100:3100"
+      environment:
+       - NODE_ENV=local
+       - ES_HOST=elasticsearch
+       - PORT= 3100
+  api:
+        container_name: pixel-api
+        build: ./api
+        ports:
+          - "4000:4000"
+        environment:
+         - NODE_ENV=local
+         - USER_URI=http://localhost:3000
+         - CHAT_URI=http://localhost:3100
+         - SECRET=qwertyuiopasdfghjklzxcvbnm123456
+  elasticsearch:
+    container_name: pixel-elasticSearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.1.1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    ports:
+      - "9300:9300"
+      - "9200:9200"
+
+
+volumes:
+  esdata:
+
+
+    

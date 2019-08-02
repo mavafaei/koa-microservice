@@ -1,0 +1,571 @@
+{
+	"info": {
+		"_postman_id": "11220700-5154-4056-81fe-7686afe84812",
+		"name": "PixelTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "create user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"email\":\"aminvafaei13@gmail.com\",\n\"name\":\"Amin vafaei\"\n}"
+						},
+						"url": {
+							"raw": "{{users_url}}/users",
+							"host": [
+								"{{users_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{users_url}}/users/59e00c9e-d85e-47ac-b9a5-9385efbde404",
+							"host": [
+								"{{users_url}}"
+							],
+							"path": [
+								"users",
+								"59e00c9e-d85e-47ac-b9a5-9385efbde404"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user by email",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{users_url}}/users?email=aminvafaei13@gmail.com",
+							"host": [
+								"{{users_url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "aminvafaei13@gmail.com"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"description": "optional | default 0",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Conversation",
+			"item": [
+				{
+					"name": "create new conversation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"parties\":[\n\t\"459dc01c-685a-450a-862d-ffe120fd6f17\",\n\t\"adb18559-050e-4264-a759-a4c724defb46\"\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{chat_url}}/conversation",
+							"host": [
+								"{{chat_url}}"
+							],
+							"path": [
+								"conversation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"from\":\"459dc01c-685a-450a-862d-ffe120fd6f17\",\n\t\"body\":\"salam123\"\n}"
+						},
+						"url": {
+							"raw": "{{chat_url}}/conversation/0d48e306-3ca9-4eba-9025-8f4b87e77e7e/message",
+							"host": [
+								"{{chat_url}}"
+							],
+							"path": [
+								"conversation",
+								"0d48e306-3ca9-4eba-9025-8f4b87e77e7e",
+								"message"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get conversation message",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"from\":\"459dc01c-685a-450a-862d-ffe120fd6f17\",\n\t\"body\":\"salam\"\n}"
+						},
+						"url": {
+							"raw": "{{chat_url}}/conversation/0d48e306-3ca9-4eba-9025-8f4b87e77e7e/message?limit=12",
+							"host": [
+								"{{chat_url}}"
+							],
+							"path": [
+								"conversation",
+								"0d48e306-3ca9-4eba-9025-8f4b87e77e7e",
+								"message"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "12"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get conversation of user by user id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{chat_url}}/conversation?userId=459dc01c-685a-450a-862d-ffe120fd6f17&offset=0&limit=1",
+							"host": [
+								"{{chat_url}}"
+							],
+							"path": [
+								"conversation"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "459dc01c-685a-450a-862d-ffe120fd6f17"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"description": "optional"
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"description": "optional"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get conversation by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{chat_url}}/conversation/0d48e306-3ca9-4eba-9025-8f4b87e77e7e?offset=0&limit=10",
+							"host": [
+								"{{chat_url}}"
+							],
+							"path": [
+								"conversation",
+								"0d48e306-3ca9-4eba-9025-8f4b87e77e7e"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get conversation by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{chat_url}}/conversation/0d48e306-3ca9-4eba-9025-8f4b87e77e7e?offset=0&limit=1",
+									"host": [
+										"{{chat_url}}"
+									],
+									"path": [
+										"conversation",
+										"0d48e306-3ca9-4eba-9025-8f4b87e77e7e"
+									],
+									"query": [
+										{
+											"key": "offset",
+											"value": "0"
+										},
+										{
+											"key": "limit",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "374"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 Aug 2019 11:42:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"took\": 42,\n    \"timed_out\": false,\n    \"_shards\": {\n        \"total\": 5,\n        \"successful\": 5,\n        \"skipped\": 0,\n        \"failed\": 0\n    },\n    \"hits\": {\n        \"total\": 1,\n        \"max_score\": 1.4384104,\n        \"hits\": [\n            {\n                \"_index\": \"conversation\",\n                \"_type\": \"list\",\n                \"_id\": \"NGtOTGwBqPf9fNTUeoa8\",\n                \"_score\": 1.4384104,\n                \"_source\": {\n                    \"id\": \"0d48e306-3ca9-4eba-9025-8f4b87e77e7e\",\n                    \"from\": \"459dc01c-685a-450a-862d-ffe120fd6f17\",\n                    \"to\": \"adb18559-050e-4264-a759-a4c724defb46\"\n                }\n            }\n        ]\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Api",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"email\":\"aminvafaei13@gmail.com\",\n\"name\":\"Amin vafaei\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/signup",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"email\":\"aminvafaei13@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/login",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user by email",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api_url}}/users?email=aminvafaei13@gmail.com",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "aminvafaei13@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create a conversation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"with\": \"adb18559-050e-4264-a759-a4c724defb46\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/conversation",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"conversation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"body\":\"salam\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/conversation/131494b7-abf9-449d-90e8-b09507fa4077/message",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"conversation",
+								"131494b7-abf9-449d-90e8-b09507fa4077",
+								"message"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get conversation by id api",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api_url}}/conversation/0d48e306-3ca9-4eba-9025-8f4b87e77e7e?offset=0&limit=1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"conversation",
+								"0d48e306-3ca9-4eba-9025-8f4b87e77e7e"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
