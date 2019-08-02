@@ -27,8 +27,8 @@ services:
           - "4000:4000"
         environment:
          - NODE_ENV=local
-         - USER_URI=http://localhost:3000
-         - CHAT_URI=http://localhost:3100
+         - USER_URI=http://172.22.0.1:3000
+         - CHAT_URI=http://172.22.0.1:3100
          - SECRET=qwertyuiopasdfghjklzxcvbnm123456
   elasticsearch:
     container_name: pixel-elasticSearch
