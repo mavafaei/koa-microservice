@@ -2,7 +2,7 @@ const joi = require('joi')
 const validate = require('koa-joi-validate')
 const ConversationController = require('../Controllers/ConversationController')
 
-const webRouter = ({router}) => {
+const webRouter = ({ router }) => {
   router.get('/', async (ctx, next) => {
     ctx.body = 'Conversation MicroService'
   })
@@ -16,7 +16,7 @@ const webRouter = ({router}) => {
       parties: joi.array().min(2).required().items(joi.string().guid().max(36).required())
     }
   }), async (ctx, next) => {
-    const {parties} = ctx.request.body
+    const { parties } = ctx.request.body
     ctx.body = await ConversationController.CreateConversation(parties)
   })
 
@@ -33,8 +33,8 @@ const webRouter = ({router}) => {
       body: joi.string().required()
     }
   }), async (ctx, next) => {
-    const {body, from} = ctx.request.body
-    const {id} = ctx.params
+    const { body, from } = ctx.request.body
+    const { id } = ctx.params
     ctx.body = await ConversationController.CreateConversationMessage(id, from, body)
   })
 
@@ -51,8 +51,8 @@ const webRouter = ({router}) => {
       limit: joi.number().integer().min(1).default(10)
     }
   }), async (ctx, next) => {
-    const {offset, limit} = ctx.query
-    const {id} = ctx.params
+    const { offset, limit } = ctx.query
+    const { id } = ctx.params
     ctx.body = await ConversationController.getConversationMessage(id, offset, limit)
   })
 
@@ -67,7 +67,7 @@ const webRouter = ({router}) => {
       limit: joi.number().integer().min(1).default(10)
     }
   }), async (ctx, next) => {
-    const {userId, offset, limit} = ctx.request.query
+    const { userId, offset, limit } = ctx.request.query
     ctx.body = await ConversationController.findUserConversation(userId, offset, limit)
   })
 
@@ -84,8 +84,8 @@ const webRouter = ({router}) => {
       limit: joi.number().integer().min(1).default(10)
     }
   }), async (ctx, next) => {
-    const {id} = ctx.params
-    const {offset, limit} = ctx.query
+    const { id } = ctx.params
+    const { offset, limit } = ctx.query
 
     ctx.body = await ConversationController.getConversationById(id, offset, limit)
   })

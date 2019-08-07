@@ -1,4 +1,4 @@
-const {client, index, type} = require('../Service/esConnection')
+const { client, index, type } = require('../Service/esConnection')
 const esConnection = require('../Service/esConnection')
 const uuid = require('uuid')
 class UserController {
@@ -8,7 +8,7 @@ class UserController {
       email: mail,
       name: name
     }
-    let userData = []
+    const userData = []
     // Describe action
     userData.push({
       index: {
@@ -18,10 +18,11 @@ class UserController {
     })
     // Add User
     userData.push(params)
-    const user = await esConnection.client.bulk({body: userData})
+    const user = await esConnection.client.bulk({ body: userData })
     console.log(`Indexed User ${params.id} - ${params.email}`)
     return user
   }
+
   findUserByMail (mail, offset = 0) {
     const body = {
       from: offset,
@@ -34,7 +35,7 @@ class UserController {
           }
         }
       },
-      highlight: {fields: {text: {}}}
+      highlight: { fields: { text: {} } }
     }
     return client.search({
       index,
@@ -42,6 +43,7 @@ class UserController {
       body
     })
   }
+
   getUserById (id) {
     const body = {
       query: {
@@ -53,7 +55,7 @@ class UserController {
           }
         }
       },
-      highlight: {fields: {text: {}}}
+      highlight: { fields: { text: {} } }
     }
     return client.search({
       index,

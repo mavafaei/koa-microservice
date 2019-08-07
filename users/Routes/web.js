@@ -2,11 +2,10 @@ const joi = require('joi')
 const validate = require('koa-joi-validate')
 const UserController = require('../Controllers/UserController')
 
-const webRouter = ({router}) => {
+const webRouter = ({ router }) => {
   router.get('/', async (ctx, next) => {
     ctx.body = 'User MicroService'
   })
-
   /**
    * Post /
    * Create New User
@@ -17,7 +16,7 @@ const webRouter = ({router}) => {
       name: joi.string().min(3).max(60)
     }
   }), async (ctx, next) => {
-    const {email, name} = ctx.request.body
+    const { email, name } = ctx.request.body
     ctx.body = await UserController.CreateUser(email, name)
   })
 
@@ -31,7 +30,7 @@ const webRouter = ({router}) => {
       offset: joi.number().integer().min(0).default(0)
     }
   }), async (ctx, next) => {
-    const {email, offset} = ctx.request.query
+    const { email, offset } = ctx.request.query
     ctx.body = await UserController.findUserByMail(email, offset)
   })
 

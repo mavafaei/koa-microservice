@@ -10,14 +10,15 @@ class UserSeeder {
 
       let data = fs.readFileSync(path.join(__dirname, '/../data/mock-users.json'))
       data = JSON.parse(data)
-      for (let i in data) {
-        const {id, name, email} = this.parseUser(data[i])
+      for (const i in data) {
+        const { id, name, email } = this.parseUser(data[i])
         await this.inserUserData(id, name, email)
       }
     } catch (e) {
       console.log('Cannot Seed Data ... ', e.message)
     }
   }
+
   parseUser (user) {
     const id = user.id
     const name = user.name
@@ -31,7 +32,7 @@ class UserSeeder {
   }
 
   async inserUserData (id, name, email) {
-    let userData = []
+    const userData = []
     // Describe action
     userData.push({
       index: {
@@ -45,7 +46,7 @@ class UserSeeder {
       name,
       email
     })
-    await esConnection.client.bulk({body: userData})
+    await esConnection.client.bulk({ body: userData })
     console.log(`Indexed User ${id} - ${email}`)
   }
 }

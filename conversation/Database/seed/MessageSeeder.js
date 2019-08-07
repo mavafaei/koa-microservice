@@ -10,14 +10,15 @@ class MessageSeeder {
       //
       let data = fs.readFileSync(path.join(__dirname, '/../data/mock-messages.json'))
       data = JSON.parse(data)
-      for (let i in data) {
-        const { id, conversationId, from, body, created_at, updated_at} = this.parseMessages(data[i])
+      for (const i in data) {
+        const { id, conversationId, from, body, created_at, updated_at } = this.parseMessages(data[i])
         await this.inserMessageData(id, conversationId, from, body, created_at, updated_at)
       }
     } catch (e) {
       console.log('Cannot Seed Data ... ', e.message)
     }
   }
+
   parseMessages (message) {
     const id = message.id
     const conversationId = message.conversationId
@@ -37,7 +38,7 @@ class MessageSeeder {
   }
 
   async inserMessageData (id, conversationId, from, body, createdAt, updatedAt) {
-    let messageData = []
+    const messageData = []
     // Describe action
     messageData.push({
       index: {
@@ -54,7 +55,7 @@ class MessageSeeder {
       createdAt,
       updatedAt
     })
-    await esConnection.client.bulk({ body: messageData})
+    await esConnection.client.bulk({ body: messageData })
     console.log(`Indexed Message ${id} - ${conversationId} - ${body}`)
   }
 }

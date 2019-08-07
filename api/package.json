@@ -1,13 +1,19 @@
 {
-  "name": "Api",
+  "name": "api",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node  app.js"
+    "start": "node  app.js",
+    "test": "standard  --fix | snazzy"
   },
   "author": "mavafaei",
   "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.19.1",
+    "snazzy": "^8.0.0",
+    "standard": "^13.1.0"
+  },
   "dependencies": {
     "dotenv": "^8.0.0",
     "elasticsearch": "^16.3.0",

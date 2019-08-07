@@ -30,11 +30,10 @@ async function checkConnection () {
 
 /** Clear the index, recreate it, and add mappings */
 async function resetIndex (name) {
-
-  if (await client.indices.exists({index: name})) {
-    await client.indices.delete({index: name})
+  if (await client.indices.exists({ index: name })) {
+    await client.indices.delete({ index: name })
   }
-  await client.indices.create({index: name})
+  await client.indices.create({ index: name })
 
   await ConversationMapping()
   await MessageMapping()
@@ -43,30 +42,30 @@ async function resetIndex (name) {
 /** Add  section schema mapping to ES */
 async function ConversationMapping () {
   const schema = {
-    id: {type: 'text'},
-    from: {type: 'text'},
-    to: {type: 'text'}
+    id: { type: 'text' },
+    from: { type: 'text' },
+    to: { type: 'text' }
   }
   return client.indices.putMapping({
     index,
     type,
-    body: {properties: schema}
+    body: { properties: schema }
   })
 }
 
 async function MessageMapping () {
   const schema = {
-    id: {type: 'text'},
-    conversationId: {type: 'text'},
-    from: {type: 'text'},
-    body: {type: 'text'},
-    created_at: {type: 'text'},
-    updated_at: {type: 'text'}
+    id: { type: 'text' },
+    conversationId: { type: 'text' },
+    from: { type: 'text' },
+    body: { type: 'text' },
+    created_at: { type: 'text' },
+    updated_at: { type: 'text' }
   }
   return client.indices.putMapping({
     index: indexMessage,
     type: typeMessage,
-    body: {properties: schema}
+    body: { properties: schema }
   })
 }
 

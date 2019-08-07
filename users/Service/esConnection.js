@@ -28,24 +28,24 @@ async function checkConnection () {
 
 /** Clear the index, recreate it, and add mappings */
 async function resetIndex () {
-  if (await client.indices.exists({index})) {
-    await client.indices.delete({index})
+  if (await client.indices.exists({ index })) {
+    await client.indices.delete({ index })
   }
-  await client.indices.create({index})
+  await client.indices.create({ index })
   await UserMapping()
 }
 
 /** Add  section schema mapping to ES */
 async function UserMapping () {
   const schema = {
-    id: {type: 'text'},
-    name: {type: 'text'},
-    email: {type: 'text'}
+    id: { type: 'text' },
+    name: { type: 'text' },
+    email: { type: 'text' }
   }
   return client.indices.putMapping({
     index,
     type,
-    body: {properties: schema}
+    body: { properties: schema }
   })
 }
 
