@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node  app.js",
+    "start": "nodemon  app.js",
     "test": "standard  --fix | snazzy"
   },
   "author": "mavafaei",
@@ -23,6 +23,7 @@
     "koa-bodyparser": "^4.2.1",
     "koa-joi-validate": "0.5.1",
     "koa-router": "7.2.1",
+    "koa-res": "^4.0.0",
     "unirest": "^0.6.0"
   }
 }
