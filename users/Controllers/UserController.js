@@ -16,52 +16,69 @@ class UserController {
         _type: esConnection.type
       }
     })
-    // Add User
-    userData.push(params)
-    const user = await esConnection.client.bulk({ body: userData })
-    console.log(`Indexed User ${params.id} - ${params.email}`)
-    return user
+    // check user unique
+    const body = {
+      query: {
+        match_phrase_prefix: {
+          email: mail
+        }
+      },
+      highlight: { fields: { text: {} } }
+    }
+    const userCount = await client.search({
+      index,
+      type,
+      body
+    })
+    if (userCount.hits.total === 0) {
+      // Add User
+      userData.push(params)
+      const user = await esConnection.client.bulk({ body: userData })
+      console.log(`Indexed User ${params.id} - ${params.email}`)
+      if (user.errors === false) {
+        return params
+      }
+    } else {
+      const err = new Error('Email exists')
+      err.status = 400
+      throw err
+    }
   }
 
-  findUserByMail (mail, offset = 0) {
+  async findUserByMail (mail, offset = 0) {
     const body = {
       from: offset,
       query: {
-        match: {
-          email: {
-            query: mail,
-            operator: 'and',
-            fuzziness: 'auto'
-          }
+        match_phrase_prefix: {
+          email: mail
         }
       },
       highlight: { fields: { text: {} } }
     }
-    return client.search({
+    const result = await client.search({
       index,
       type,
       body
     })
+    console.log(result.hits)
+    return result.hits.hits
   }
 
-  getUserById (id) {
+  async getUserById (id) {
     const body = {
       query: {
-        match: {
-          id: {
-            query: id,
-            operator: 'and',
-            fuzziness: 'auto'
-          }
+        match_phrase_prefix: {
+          id: id
         }
       },
       highlight: { fields: { text: {} } }
     }
-    return client.search({
+    const result = await client.search({
       index,
       type,
       body
     })
+    return result.hits.hits
   }
 }
 
