@@ -11,8 +11,8 @@ class MessageSeeder {
       let data = fs.readFileSync(path.join(__dirname, '/../data/mock-messages.json'))
       data = JSON.parse(data)
       for (const i in data) {
-        const { id, conversationId, from, body, created_at, updated_at } = this.parseMessages(data[i])
-        await this.inserMessageData(id, conversationId, from, body, created_at, updated_at)
+        const { id, conversationId, from, body, createdAt, updatedAt } = this.parseMessages(data[i])
+        await this.inserMessageData(id, conversationId, from, body, createdAt, updatedAt)
       }
     } catch (e) {
       console.log('Cannot Seed Data ... ', e.message)

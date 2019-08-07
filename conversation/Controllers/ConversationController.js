@@ -19,15 +19,44 @@ class ConversationController {
     })
     // Add Conversation
     conversationData.push(params)
-    const conversation = await esConnection.client.bulk({ body: conversationData })
-    console.log(`Indexed Conversation ${params.id} - ${from} - ${to}`)
-    return conversation
+
+    // check conversation unique
+    const body = {
+      query: {
+        bool: {
+          must: [
+            {
+              match_phrase_prefix: {
+                from: from
+              }
+            },
+            {
+              match_phrase_prefix: {
+                to: to
+              }
+            }
+          ]
+        }
+      }
+    }
+    const conversationCount = await client.search({
+      index,
+      type,
+      body
+    })
+    if (conversationCount.hits.total === 0) {
+      // Add Conversation
+      await esConnection.client.bulk({ body: conversationData })
+      console.log(`Indexed Conversation ${params.id} - ${from} - ${to}`)
+      return params
+    } else {
+      return conversationCount.hits.hits[0]._source
+    }
   }
 
   async CreateConversationMessage (conversationId, from, body) {
     const params = {
       id: uuid(),
-
       conversationId: conversationId,
       from: from,
       body: body,
@@ -45,44 +74,48 @@ class ConversationController {
     })
     // Add Message
     messageData.push(params)
-    const message = await esConnection.client.bulk({ body: messageData })
+    await esConnection.client.bulk({ body: messageData })
     console.log(`Indexed Message ${params.id} - ${conversationId} - ${body}`)
-    return message
+    return params
   }
 
-  findUserConversation (userId, offset = 0, limit = 10) {
+  async findUserConversation (userId, offset = 0, limit = 10) {
     const body = {
       from: offset,
       size: limit,
       query: {
-        match: {
-          from: {
-            query: userId,
-            operator: 'and',
-            fuzziness: 'auto'
-          }
+        bool: {
+          should: [
+            {
+              match_phrase_prefix: {
+                from: userId
+              }
+            },
+            {
+              match_phrase_prefix: {
+                to: userId
+              }
+            }
+          ]
         }
       },
       highlight: { fields: { text: {} } }
     }
-    return client.search({
+    const result = await client.search({
       index,
       type,
       body
     })
+
+    return result.hits.hits
   }
 
   async getConversationById (id, offset = 0, limit = 10) {
     let messages = []
     const body = {
-
       query: {
-        match: {
-          id: {
-            query: id,
-            operator: 'and',
-            fuzziness: 'auto'
-          }
+        match_phrase_prefix: {
+          id: id
         }
       },
       highlight: { fields: { text: {} } }
@@ -99,14 +132,11 @@ class ConversationController {
           from: offset,
           size: limit,
           query: {
-            match: {
-              conversationId: {
-                query: conversation.hits.hits[i]._source.id,
-                operator: 'and',
-                fuzziness: 'auto'
-              }
+            match_phrase_prefix: {
+              conversationId: conversation.hits.hits[i]._source.id
             }
           },
+
           highlight: { fields: { text: {} } }
         }
         messages = await client.search({
@@ -117,29 +147,27 @@ class ConversationController {
       }
     }
 
-    return { conversation: conversation, messages: messages }
+    return { conversation: conversation.hits.hits, messages: messages.hits.hits }
   }
 
-  getConversationMessage (id, offset = 0, limit = 10) {
+  async getConversationMessage (id, offset = 0, limit = 10) {
     const body = {
       from: offset,
       size: limit,
       query: {
-        match: {
-          conversationId: {
-            query: id,
-            operator: 'and',
-            fuzziness: 'auto'
-          }
+        match_phrase_prefix: {
+          conversationId: id
         }
       },
       highlight: { fields: { text: {} } }
     }
-    return client.search({
+    const result = await client.search({
       index: esConnection.indexMessage,
       type: esConnection.typeMessage,
       body
     })
+
+    return result.hits.hits
   }
 }
 

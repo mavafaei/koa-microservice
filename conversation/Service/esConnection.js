@@ -59,8 +59,8 @@ async function MessageMapping () {
     conversationId: { type: 'text' },
     from: { type: 'text' },
     body: { type: 'text' },
-    created_at: { type: 'text' },
-    updated_at: { type: 'text' }
+    createdAt: { type: 'text' },
+    updatedAt: { type: 'text' }
   }
   return client.indices.putMapping({
     index: indexMessage,
