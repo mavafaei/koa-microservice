@@ -1,4 +1,7 @@
 const elasticsearch = require('elasticsearch')
+const Message = require('../Models/Message')
+const Conversation = require('../Models/Conversation')
+
 // Core ES variables for this project
 const index = 'conversation'
 const type = 'list'
@@ -35,38 +38,8 @@ async function resetIndex (name) {
   }
   await client.indices.create({ index: name })
 
-  await ConversationMapping()
-  await MessageMapping()
-}
-
-/** Add  section schema mapping to ES */
-async function ConversationMapping () {
-  const schema = {
-    id: { type: 'text' },
-    from: { type: 'text' },
-    to: { type: 'text' }
-  }
-  return client.indices.putMapping({
-    index,
-    type,
-    body: { properties: schema }
-  })
-}
-
-async function MessageMapping () {
-  const schema = {
-    id: { type: 'text' },
-    conversationId: { type: 'text' },
-    from: { type: 'text' },
-    body: { type: 'text' },
-    createdAt: { type: 'text' },
-    updatedAt: { type: 'text' }
-  }
-  return client.indices.putMapping({
-    index: indexMessage,
-    type: typeMessage,
-    body: { properties: schema }
-  })
+  await Message.MessageMapping(client, indexMessage, typeMessage)
+  await Conversation.ConversationMapping(client, index, type)
 }
 
 module.exports = {

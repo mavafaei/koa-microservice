@@ -1,4 +1,5 @@
 const elasticsearch = require('elasticsearch')
+const User = require('../Models/User')
 // Core ES variables for this project
 const index = 'users'
 const type = 'list'
@@ -32,21 +33,7 @@ async function resetIndex () {
     await client.indices.delete({ index })
   }
   await client.indices.create({ index })
-  await UserMapping()
-}
-
-/** Add  section schema mapping to ES */
-async function UserMapping () {
-  const schema = {
-    id: { type: 'text' },
-    name: { type: 'text' },
-    email: { type: 'text' }
-  }
-  return client.indices.putMapping({
-    index,
-    type,
-    body: { properties: schema }
-  })
+  await User.UserMapping(client, index, type)
 }
 
 module.exports = {
