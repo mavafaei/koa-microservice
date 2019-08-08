@@ -1,7 +1,10 @@
 require('dotenv').config()
+const http = require('http')
+const socketIo = require('socket.io')
 const Koa = require('koa')
 const Router = require('koa-router')
-var bodyParser = require('koa-bodyparser')
+const bodyParser = require('koa-bodyparser')
+const socketConnection = require('./service/socketConnection')
 
 // generate new app
 const app = new Koa()
@@ -41,10 +44,19 @@ app.use(async (ctx, next) => {
       }
   }
 })
+const server = http.createServer(app.callback())
+
+app.use(async (ctx, next) => {
+  // Socket.io
+  const io = socketIo(server)
+
+  socketConnection.start(io, ctx, next)
+  await next()
+})
 
 const port = process.env.PORT || 4000
 
-app.listen(port, err => {
+server.listen(port, err => {
   if (err) throw err
   console.log(`App Listening on Port ${port}`)
 })

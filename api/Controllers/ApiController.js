@@ -1,6 +1,5 @@
 const unirest = require('unirest')
 const jwt = require('../middleware/jwt')
-
 class ApiController {
   async signup (ctx, next) {
     const { email, name } = ctx.request.body
@@ -15,7 +14,6 @@ class ApiController {
         'Content-Type': 'application/json'
       }).send(params).end((response) => {
         if (response) {
-          ctx.status = response.status
           resolve(response.body)
         } else if (response.error) {
           reject(response)
@@ -46,7 +44,7 @@ class ApiController {
             token: token,
             user: response.body
           }
-          ctx.status = response.status
+
           resolve(data)
         } else if (response.error) {
           reject(response)
@@ -65,7 +63,6 @@ class ApiController {
         email: email
       }).end((response) => {
         if (response) {
-          ctx.status = response.status
           resolve(response.body)
         } else if (response.error) {
           reject(response)
@@ -88,7 +85,6 @@ class ApiController {
         'Content-Type': 'application/json'
       }).send({ parties: parties }).end((response) => {
         if (response) {
-          ctx.status = response.status
           resolve(response.body)
         } else if (response.error) {
           reject(response)
@@ -98,13 +94,20 @@ class ApiController {
   }
 
   async CreateConversationMessage (ctx, next) {
-    const { body } = ctx.request.body
+    const { body, from } = ctx.request.body
     const { id } = ctx.params
+    const token = ctx.request.body.token || ctx.headers.authorization
 
-    const User = await jwt.getUser(ctx, next)
     const params = {
-      from: User.user.id,
       body: body
+    }
+
+    if (typeof token === 'undefined') {
+      params.from = from
+    } else {
+      const User = await jwt.getUser(ctx, next)
+
+      params.from = User.user.id
     }
 
     return new Promise((resolve, reject) => {
@@ -113,7 +116,6 @@ class ApiController {
         'Content-Type': 'application/json'
       }).send(params).end((response) => {
         if (response) {
-          ctx.status = response.status
           resolve(response.body)
         } else if (response.error) {
           reject(response)
@@ -135,7 +137,6 @@ class ApiController {
         limit: limit
       }).end((response) => {
         if (response) {
-          ctx.status = response.status
           resolve(response.body)
         } else if (response.error) {
           reject(response)
