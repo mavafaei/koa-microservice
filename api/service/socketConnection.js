@@ -7,9 +7,9 @@ module.exports = {
       // login socket
       socket.on('login', async (msg) => {
         ctx.request.body = msg
-
         const result = await ApiController.login(ctx, next)
-        if (result.user.code === 200) {
+
+        if (typeof result.user !== 'undefined' && result.user.code === 200) {
           io.emit('login-success', 'user login successfully')
         } else {
           io.emit('login-failed', 'user login Failed')
@@ -30,7 +30,7 @@ module.exports = {
           ctx.request.body.id = result.data.to
           const toUser = await ApiController.findUserById(ctx, next)
           result.data.toUser = toUser
-          
+
           await slack.send(result.data)
         } else {
           io.emit('send-failed', 'send message Failed')

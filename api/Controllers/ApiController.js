@@ -34,17 +34,18 @@ class ApiController {
       }).end((response) => {
         if (response) {
           let data = {}
-
-          // if (response.body.data.length >= 1) {
-          const token = jwt.createToken(
-            { user: response.body },
-            864000
-          )
-          data = {
-            token: token,
-            user: response.body
+          if (typeof response.body.code !== 'undefined' && response.body.code === 200) {
+            const token = jwt.createToken(
+              { user: response.body },
+              864000
+            )
+            data = {
+              token: token,
+              user: response.body
+            }
+          } else {
+            data = response.body
           }
-
           resolve(data)
         } else if (response.error) {
           reject(response)
