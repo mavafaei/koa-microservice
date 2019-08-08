@@ -6,10 +6,12 @@ const bodyParser = require('koa-bodyparser')
 
 // generate new app
 const app = new Koa()
+
 const router = new Router()
 app.use(bodyParser())
 app.use(genres({ debug: process.env.NODE_ENV === 'development' }))
 app.use(async (ctx, next) => {
+  console.log(ctx.request.body)
   const start = Date.now()
   await next()
   const ms = Date.now() - start

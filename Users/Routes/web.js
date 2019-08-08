@@ -11,12 +11,13 @@ const webRouter = ({ router }) => {
    * Create New User
    */
   router.post('/users', validate({
-    body: {
+    'body.data': {
       email: joi.string().email().max(60).required(),
       name: joi.string().min(3).max(60)
     }
   }), async (ctx, next) => {
     const { email, name } = ctx.request.body
+
     ctx.body = await UserController.CreateUser(email, name)
   })
 
