@@ -46,13 +46,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{users_url}}/users/566330b5-d55f-439a-a041-18b0774e9b99",
+							"raw": "{{users_url}}/users/adb18559-050e-4264-a759-a4c724defb46",
 							"host": [
 								"{{users_url}}"
 							],
 							"path": [
 								"users",
-								"566330b5-d55f-439a-a041-18b0774e9b99"
+								"adb18559-050e-4264-a759-a4c724defb46"
 							]
 						}
 					},
@@ -396,7 +396,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\"email\":\"aminvafaei13@gmail.com\"\n}\n"
+							"raw": "{\n\"email\":\"aminvafaei13@gmail1.com\"\n}\n"
 						},
 						"url": {
 							"raw": "{{api_url}}/login",
@@ -561,6 +561,40 @@
 									"key": "limit",
 									"value": "1"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send slack",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"text\":\"Hello, World!\"}"
+						},
+						"url": {
+							"raw": "https://hooks.slack.com/services/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",
+							"protocol": "https",
+							"host": [
+								"hooks",
+								"slack",
+								"com"
+							],
+							"path": [
+								"services",
+								"TM85XFW2J",
+								"BLUJC062F",
+								"5Pnoq22rpnhcs2SXCFk6j6HP"
 							]
 						}
 					},
