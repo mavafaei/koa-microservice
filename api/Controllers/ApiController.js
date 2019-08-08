@@ -71,6 +71,23 @@ class ApiController {
     })
   }
 
+  async findUserById (ctx, next) {
+    const { id } = ctx.request.body
+
+    return new Promise((resolve, reject) => {
+      unirest.get(`${process.env.USER_URI}/users/${id}`).headers({
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }).end((response) => {
+        if (response) {
+          resolve(response.body)
+        } else if (response.error) {
+          reject(response)
+        }
+      })
+    })
+  }
+
   async cerateConversation (ctx, next) {
     const withUser = ctx.request.body.with
 

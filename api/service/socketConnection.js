@@ -1,4 +1,5 @@
 const ApiController = require('../Controllers/ApiController')
+const slack = require('./slack')
 module.exports = {
   start: function (io, ctx, next) {
     io.on('connection', function (socket) {
@@ -23,6 +24,14 @@ module.exports = {
 
         if (result.code === 200) {
           io.emit('send-success', result.data)
+          ctx.request.body.id = result.data.from
+          const fromUser = await ApiController.findUserById(ctx, next)
+          result.data.fromUser = fromUser
+          ctx.request.body.id = result.data.to
+          const toUser = await ApiController.findUserById(ctx, next)
+          result.data.toUser = toUser
+          
+          await slack.send(result.data)
         } else {
           io.emit('send-failed', 'send message Failed')
         }

@@ -99,6 +99,7 @@ class ConversationController {
     } else {
       await esConnection.client.bulk({ body: messageData })
       console.log(`Indexed Message ${params.id} - ${conversationId} - ${body}`)
+      params.to = conversationCount.hits.hits[0]._source.to
     }
     return params
   }
