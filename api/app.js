@@ -1,6 +1,5 @@
 require('dotenv').config()
 const Koa = require('koa')
-/** const genres = require('koa-res') */
 const Router = require('koa-router')
 var bodyParser = require('koa-bodyparser')
 
@@ -9,7 +8,6 @@ const app = new Koa()
 const router = new Router()
 const Jwtrouter = new Router()
 app.use(bodyParser())
-/** app.use(genres({ debug: process.env.NODE_ENV === 'development' }))  */
 app.use(async (ctx, next) => {
   const start = Date.now()
   await next()

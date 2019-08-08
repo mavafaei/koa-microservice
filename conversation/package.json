@@ -20,8 +20,7 @@
     "joi": "13.0.1",
     "koa": "2.4.1",
     "koa-bodyparser": "^4.2.1",
-    "koa-joi-validate": "0.5.1",
-    "koa-res": "^4.0.0",
+    "koa-joi-validate": "0.5.1", 
     "koa-router": "7.2.1",
     "uuid": "^3.3.2"
   }

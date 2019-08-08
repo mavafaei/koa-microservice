@@ -46,13 +46,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{users_url}}/users/59e00c9e-d85e-47ac-b9a5-9385efbde404",
+							"raw": "{{users_url}}/users/566330b5-d55f-439a-a041-18b0774e9b99",
 							"host": [
 								"{{users_url}}"
 							],
 							"path": [
 								"users",
-								"59e00c9e-d85e-47ac-b9a5-9385efbde404"
+								"566330b5-d55f-439a-a041-18b0774e9b99"
 							]
 						}
 					},
@@ -120,7 +120,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\"parties\":[\n\t\"459dc01c-685a-450a-862d-ffe120fd6f17\",\n\t\"adb18559-050e-4264-a759-a4c724defb46\"\n\t]\n}"
+							"raw": "{\n\"parties\":[\n\t\"459dc01c-685a-450a-862d-ffe120fd6f17\",\n\t\"adb18559-050e-4264-a759-a4c724defb48\"\n\t]\n}"
 						},
 						"url": {
 							"raw": "{{chat_url}}/conversation",
@@ -148,16 +148,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"from\":\"459dc01c-685a-450a-862d-ffe120fd6f17\",\n\t\"body\":\"salam123\"\n}"
+							"raw": "{\n\t\"from\":\"459dc01c-685a-450a-862d-ffe120fd6f17\",\n\t\"body\":\"12132123132\"\n}"
 						},
 						"url": {
-							"raw": "{{chat_url}}/conversation/0d48e306-3ca9-4eba-9025-8f4b87e77e7e/message",
+							"raw": "{{chat_url}}/conversation/33c61f94-831f-4248-9962-32449b6ea7ad/message",
 							"host": [
 								"{{chat_url}}"
 							],
 							"path": [
 								"conversation",
-								"0d48e306-3ca9-4eba-9025-8f4b87e77e7e",
+								"33c61f94-831f-4248-9962-32449b6ea7ad",
 								"message"
 							]
 						}
@@ -184,19 +184,19 @@
 							"raw": "{\n\t\"from\":\"459dc01c-685a-450a-862d-ffe120fd6f17\",\n\t\"body\":\"salam\"\n}"
 						},
 						"url": {
-							"raw": "{{chat_url}}/conversation/0d48e306-3ca9-4eba-9025-8f4b87e77e7e/message?limit=12",
+							"raw": "{{chat_url}}/conversation/33c61f94-831f-4248-9962-32449b6ea7ad/message?limit=20",
 							"host": [
 								"{{chat_url}}"
 							],
 							"path": [
 								"conversation",
-								"0d48e306-3ca9-4eba-9025-8f4b87e77e7e",
+								"33c61f94-831f-4248-9962-32449b6ea7ad",
 								"message"
 							],
 							"query": [
 								{
 									"key": "limit",
-									"value": "12"
+									"value": "20"
 								}
 							]
 						}
@@ -213,7 +213,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{chat_url}}/conversation?userId=459dc01c-685a-450a-862d-ffe120fd6f17&offset=0&limit=1",
+							"raw": "{{chat_url}}/conversation?userId=459dc01c-685a-450a-862d-ffe120fd6f17&offset=0",
 							"host": [
 								"{{chat_url}}"
 							],
@@ -233,7 +233,8 @@
 								{
 									"key": "limit",
 									"value": "1",
-									"description": "optional"
+									"description": "optional",
+									"disabled": true
 								}
 							]
 						}
@@ -260,22 +261,22 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{chat_url}}/conversation/0d48e306-3ca9-4eba-9025-8f4b87e77e7e?offset=0&limit=10",
+							"raw": "{{chat_url}}/conversation/33c61f94-831f-4248-9962-32449b6ea7ad?offset=1&limit=220",
 							"host": [
 								"{{chat_url}}"
 							],
 							"path": [
 								"conversation",
-								"0d48e306-3ca9-4eba-9025-8f4b87e77e7e"
+								"33c61f94-831f-4248-9962-32449b6ea7ad"
 							],
 							"query": [
 								{
 									"key": "offset",
-									"value": "0"
+									"value": "1"
 								},
 								{
 									"key": "limit",
-									"value": "10"
+									"value": "220"
 								}
 							]
 						}
@@ -395,7 +396,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\"email\":\"aminvafaei13@gmail.com\"\n}"
+							"raw": "{\n\"email\":\"aminvafaei13@gmail.com\"\n}\n"
 						},
 						"url": {
 							"raw": "{{api_url}}/login",
@@ -510,13 +511,13 @@
 							"raw": "{\n\t\"body\":\"salam\"\n}"
 						},
 						"url": {
-							"raw": "{{api_url}}/conversation/131494b7-abf9-449d-90e8-b09507fa4077/message",
+							"raw": "{{api_url}}/conversation/0c6bc71a-2245-4b71-8d4b-095e462d74b9/message",
 							"host": [
 								"{{api_url}}"
 							],
 							"path": [
 								"conversation",
-								"131494b7-abf9-449d-90e8-b09507fa4077",
+								"0c6bc71a-2245-4b71-8d4b-095e462d74b9",
 								"message"
 							]
 						}
@@ -543,13 +544,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{api_url}}/conversation/0d48e306-3ca9-4eba-9025-8f4b87e77e7e?offset=0&limit=1",
+							"raw": "{{api_url}}/conversation/0c6bc71a-2245-4b71-8d4b-095e462d74b9?offset=0&limit=1",
 							"host": [
 								"{{api_url}}"
 							],
 							"path": [
 								"conversation",
-								"0d48e306-3ca9-4eba-9025-8f4b87e77e7e"
+								"0c6bc71a-2245-4b71-8d4b-095e462d74b9"
 							],
 							"query": [
 								{

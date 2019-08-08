@@ -1,6 +1,6 @@
 require('dotenv').config()
 const Koa = require('koa')
-const genres = require('koa-res')
+const genres = require('./Service/response')
 const Router = require('koa-router')
 const bodyParser = require('koa-bodyparser')
 
@@ -32,12 +32,21 @@ app.use(async (ctx, next) => {
 
     if (ctx.status === 404) { ctx.throw(ctx.status) }
   } catch (e) {
+    ctx._returnRaw = true
     ctx.status = e.status
-    ctx.body =
-      {
-        code: e.status,
+    ctx.body = {
+      error: {
+        status: e.status,
+        title: 'Not Found',
         message: e.message
       }
+    }
+    // ctx.body =
+    //   {
+
+    //     code: e.status,
+    //     message: e.message
+    //   }
   }
 })
 

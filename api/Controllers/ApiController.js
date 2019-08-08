@@ -37,26 +37,17 @@ class ApiController {
         if (response) {
           let data = {}
 
-          if (response.body.data.length === 1) {
-            const token = jwt.createToken(
-              { user: response.body.data[0]._source },
-              864000
-            )
-            data = {
-              token: token,
-              user: response.body.data[0]
-            }
-            ctx.status = response.status
-            resolve(data)
-          } else {
-            data = {
-              status: 404,
-              result: 'User not found'
-
-            }
-            ctx.status = 404
-            resolve(data)
+          // if (response.body.data.length >= 1) {
+          const token = jwt.createToken(
+            { user: response.body },
+            864000
+          )
+          data = {
+            token: token,
+            user: response.body
           }
+          ctx.status = response.status
+          resolve(data)
         } else if (response.error) {
           reject(response)
         }
@@ -74,20 +65,8 @@ class ApiController {
         email: email
       }).end((response) => {
         if (response) {
-          let data = {}
-
-          if (response.body.data.length === 1) {
-            ctx.status = response.status
-            resolve(response.body)
-          } else {
-            data = {
-              status: 404,
-              result: 'User not found'
-
-            }
-            ctx.status = 404
-            resolve(data)
-          }
+          ctx.status = response.status
+          resolve(response.body)
         } else if (response.error) {
           reject(response)
         }
@@ -109,12 +88,8 @@ class ApiController {
         'Content-Type': 'application/json'
       }).send({ parties: parties }).end((response) => {
         if (response) {
-          const data = {
-            status: 200,
-            result: response.body
-          }
           ctx.status = response.status
-          resolve(data)
+          resolve(response.body)
         } else if (response.error) {
           reject(response)
         }
@@ -138,12 +113,8 @@ class ApiController {
         'Content-Type': 'application/json'
       }).send(params).end((response) => {
         if (response) {
-          const data = {
-            status: 200,
-            result: response.body
-          }
           ctx.status = response.status
-          resolve(data)
+          resolve(response.body)
         } else if (response.error) {
           reject(response)
         }
@@ -164,12 +135,8 @@ class ApiController {
         limit: limit
       }).end((response) => {
         if (response) {
-          const data = {
-            status: 200,
-            result: response.body
-          }
           ctx.status = response.status
-          resolve(data)
+          resolve(response.body)
         } else if (response.error) {
           reject(response)
         }

@@ -39,8 +39,8 @@ class UserController {
         return params
       }
     } else {
-      const err = new Error('Email exists')
-      err.status = 400
+      const err = new Error('Email already registerd')
+      err.status = 409
       throw err
     }
   }
@@ -52,16 +52,21 @@ class UserController {
         match_phrase_prefix: {
           email: mail
         }
-      },
-      highlight: { fields: { text: {} } }
+      }
     }
     const result = await client.search({
       index,
       type,
       body
     })
-    console.log(result.hits)
-    return result.hits.hits
+
+    try {
+      return result.hits.hits[0]._source
+    } catch (e) {
+      const err = new Error('User not found')
+      err.status = 404
+      throw err
+    }
   }
 
   async getUserById (id) {
@@ -78,7 +83,13 @@ class UserController {
       type,
       body
     })
-    return result.hits.hits
+    try {
+      return result.hits.hits[0]._source
+    } catch (e) {
+      const err = new Error('User not found')
+      err.status = 404
+      throw err
+    }
   }
 }
 

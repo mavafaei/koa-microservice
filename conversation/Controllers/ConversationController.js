@@ -74,8 +74,32 @@ class ConversationController {
     })
     // Add Message
     messageData.push(params)
-    await esConnection.client.bulk({ body: messageData })
-    console.log(`Indexed Message ${params.id} - ${conversationId} - ${body}`)
+
+    // check conversation exists
+
+    const conversationBody = {
+      query: {
+        match_phrase_prefix: {
+          id: conversationId
+        }
+      },
+      highlight: { fields: { text: {} } }
+    }
+
+    const conversationCount = await client.search({
+      index,
+      type,
+      body: conversationBody
+    })
+
+    if (conversationCount.hits.total === 0) {
+      const err = new Error('Conversation not found')
+      err.status = 404
+      throw err
+    } else {
+      await esConnection.client.bulk({ body: messageData })
+      console.log(`Indexed Message ${params.id} - ${conversationId} - ${body}`)
+    }
     return params
   }
 

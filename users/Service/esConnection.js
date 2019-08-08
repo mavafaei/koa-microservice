@@ -21,6 +21,7 @@ async function checkConnection () {
       console.log('Connection Successfully', health)
       isConnected = true
     } catch (err) {
+      console.log(123)
       console.log('Connection Failed, Retrying...', err)
     }
   }

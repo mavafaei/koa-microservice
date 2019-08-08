@@ -1,6 +1,6 @@
 require('dotenv').config()
 const Koa = require('koa')
-const genres = require('koa-res')
+const genres = require('./Service/response')
 const Router = require('koa-router')
 const bodyParser = require('koa-bodyparser')
 
